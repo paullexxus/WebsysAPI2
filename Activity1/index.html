@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Computer Specs</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <h1>Computer specs</h1>
+    <label>ENTER ID</label> 
+    
+    <div class="choices">
+        <h3>Choices</h3>
+        <div class="choices-row">
+            <p>computer</p>
+        </div>
+    </div>
+    <input type="text" id="computerId">
+    <button onclick="fetchMessage()">CLICK ME</button>
+    <div id="message"></div>
+
+   
+
+    <script>
+        function fetchMessage(){
+            let xhr = new XMLHttpRequest();
+            xhr.open('GET', 'https://paullexxus.github.io/WebsysAPI2/data.json', true);
+
+            xhr.onload = function(){
+            if(xhr.status === 200){
+                let response = JSON.parse(xhr.responseText);
+                console.log(response);
+                let id = document.getElementById('computerId').value;
+
+                if(id === "computer") {
+                    let computer = response["computer"];
+                    document.getElementById('message').innerHTML = `
+                        <p><strong>Brand:</strong> ${computer.brand}</p>
+                        <p><strong>Model:</strong> ${computer.model}</p>
+                        <p><strong>Processor:</strong> ${computer.processor.brand} ${computer.processor.model} (${computer.processor.speed})</p>
+                        <p><strong>Memory:</strong> ${computer.memory.size} ${computer.memory.type}</p>
+                        <p><strong>Storage:</strong> ${computer.storage.capacity} ${computer.storage.type}</p>
+                    `;
+                } 
+                else {
+                    document.getElementById('message').innerText = 'ID NOT FOUND';
+                }
+            } else {
+                document.getElementById('message').innerText = 'Error loading data';
+            }
+        };
+
+            xhr.send();
+        }
+    </script>
+
+</body>
+</html>
