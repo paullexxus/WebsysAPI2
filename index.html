@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    
+    <h1>Computer specs</h1>
+    <label>ENTER ID</label>
+    <input type="text" id="computerId">
+    <button onclick="fetchMessage()">click me daddy</button>
+    <div id="message"></div>
+
+    <script>
+
+        function fetchMessage(){
+
+            let xhr = new XMLHttpRequest();
+
+            xhr.open('GET', 'https://paullexxus.github.io/WebSysAPI/data.json', true)
+
+            xhr.onload = function(){
+
+                if(xhr.status===200){
+                    let response = JSON.parse(xhr.responseText);
+
+                    document.getElementById('message').innerText = response.id;
+                }
+
+                else{
+                    document.getElementById('message').innerText = 'Error';
+                }
+            };
+
+            xhr.send();
+
+        }
+    </script>
+</body>
